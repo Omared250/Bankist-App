@@ -64,6 +64,10 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 //Movements
 const displayMovements = function(movements) {
+
+  // setting the HTML to a empty space before render the new HTML with all the information
+  containerMovements.innerHTML = '';
+
   movements.forEach(function(mov, i){
 
     const type = mov > 0 ? 'deposit' : 'withdrawal';
