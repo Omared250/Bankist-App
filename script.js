@@ -107,12 +107,11 @@ const calcDisplaySummary = function(movements) {
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0)
   labelSumInterest.textContent = `${interest} €`
-
 }
 calcDisplaySummary(account1.movements);
 
 const createUsernames = function(accs) {
-  accs.forEach(function(acc){
+  accs.forEach(function(acc) {
     acc.username = acc.owner
     .toLowerCase()
     .split(' ')
@@ -121,3 +120,23 @@ const createUsernames = function(accs) {
   })
 }
 createUsernames(accounts);
+
+/// Events handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function(e) {
+  //Prevent form from submitting
+  e.preventDefault();
+  
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcom back, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+    // Display movements
+    // Display balance
+    // Display summary
+  }
+})
