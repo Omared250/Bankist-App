@@ -83,9 +83,9 @@ const displayMovements = function(movements) {
   });
 }
 
-const calcDisplayBalance = function(movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} €`
+const calcDisplayBalance = function(acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance} €`
 };
 
 const calcDisplaySummary = function(acc) {
@@ -126,7 +126,6 @@ btnLogin.addEventListener('click', function(e) {
   e.preventDefault();
   
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
-  console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
@@ -141,9 +140,26 @@ btnLogin.addEventListener('click', function(e) {
     displayMovements(currentAccount.movements);
 
     // Display balance
-    calcDisplayBalance(currentAccount.movements);
+    calcDisplayBalance(currentAccount);
 
     // Display summary
     calcDisplaySummary(currentAccount);
   }
+})
+
+btnTransfer.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+
+  if (amount > 0 &&
+    receiverAcc && 
+    currentAccount.balance >= amount && 
+    receiverAcc?.username !== currentAccount.username) {
+
+      console.log('transfert valid!');
+    
+  }
+
 })
